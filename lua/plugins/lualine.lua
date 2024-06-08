@@ -1,55 +1,71 @@
-
 return {
-    {
-        'nvim-lualine/lualine.nvim',
-        dependencies = { 'nvim-tree/nvim-web-devicons' },
-        config = function()
-            -- Import Kanagawa colors
-            local theme = require("kanagawa.colors").setup().theme
+  "nvim-lualine/lualine.nvim",
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  config = function()
+    local lualine = require("lualine")
+    local lazy_status = require("lazy.status") -- to configure lazy pending updates count
 
-            -- Define Kanagawa colors for lualine
-            local kanagawa = {
-                normal = {
-                    a = { bg = theme.syn.fun, fg = theme.ui.bg_m3 },
-                    b = { bg = theme.diff.change, fg = theme.syn.fun },
-                    c = { bg = theme.ui.bg_p1, fg = theme.ui.fg },
-                },
-                insert = {
-                    a = { bg = theme.diag.ok, fg = theme.ui.bg },
-                    b = { bg = theme.ui.bg, fg = theme.diag.ok },
-                },
-                command = {
-                    a = { bg = theme.syn.operator, fg = theme.ui.bg },
-                    b = { bg = theme.ui.bg, fg = theme.syn.operator },
-                },
-                visual = {
-                    a = { bg = theme.syn.keyword, fg = theme.ui.bg },
-                    b = { bg = theme.ui.bg, fg = theme.syn.keyword },
-                },
-                replace = {
-                    a = { bg = theme.syn.constant, fg = theme.ui.bg },
-                    b = { bg = theme.ui.bg, fg = theme.syn.constant },
-                },
-                inactive = {
-                    a = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
-                    b = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim, gui = "bold" },
-                    c = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
-                },
-            }
-
-            -- Make 'a' mode bold if kanagawa_lualine_bold is set
-            if vim.g.kanagawa_lualine_bold then
-                for _, mode in pairs(kanagawa) do
-                    mode.a.gui = "bold"
-                end
-            end
-
-            -- Set up lualine with Kanagawa colors
-            require('lualine').setup({
-                options = {
-                    theme = kanagawa,
-                },
-            })
-        end
+    local colors = {
+      blue = "#65D1FF",
+      green = "#3EFFDC",
+      violet = "#FF61EF",
+      yellow = "#FFDA7B",
+      red = "#FF4A4A",
+      fg = "#c3ccdc",
+      bg = "#112638",
+      inactive_bg = "#2c3043",
     }
+
+    local my_lualine_theme = {
+      normal = {
+        a = { bg = colors.blue, fg = colors.bg, gui = "bold" },
+        b = { bg = colors.bg, fg = colors.fg },
+        c = { bg = colors.bg, fg = colors.fg },
+      },
+      insert = {
+        a = { bg = colors.green, fg = colors.bg, gui = "bold" },
+        b = { bg = colors.bg, fg = colors.fg },
+        c = { bg = colors.bg, fg = colors.fg },
+      },
+      visual = {
+        a = { bg = colors.violet, fg = colors.bg, gui = "bold" },
+        b = { bg = colors.bg, fg = colors.fg },
+        c = { bg = colors.bg, fg = colors.fg },
+      },
+      command = {
+        a = { bg = colors.yellow, fg = colors.bg, gui = "bold" },
+        b = { bg = colors.bg, fg = colors.fg },
+        c = { bg = colors.bg, fg = colors.fg },
+      },
+      replace = {
+        a = { bg = colors.red, fg = colors.bg, gui = "bold" },
+        b = { bg = colors.bg, fg = colors.fg },
+        c = { bg = colors.bg, fg = colors.fg },
+      },
+      inactive = {
+        a = { bg = colors.inactive_bg, fg = colors.semilightgray, gui = "bold" },
+        b = { bg = colors.inactive_bg, fg = colors.semilightgray },
+        c = { bg = colors.inactive_bg, fg = colors.semilightgray },
+      },
+    }
+
+    -- configure lualine with modified theme
+    lualine.setup({
+      options = {
+        theme = my_lualine_theme,
+      },
+      sections = {
+        lualine_x = {
+          {
+            lazy_status.updates,
+            cond = lazy_status.has_updates,
+            color = { fg = "#ff9e64" },
+          },
+          { "encoding" },
+          { "fileformat" },
+          { "filetype" },
+        },
+      },
+    })
+  end,
 }
