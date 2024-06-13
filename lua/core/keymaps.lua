@@ -19,12 +19,15 @@ keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 keymap.set("n", "<leader>js", ":w !node <ENTER>", { desc = "Save and Execute js file using node" })
 
 -- Compile and run C++ code with redirection on F5
-keymap.set('n', '<C-b>', ':w | !g++ -std=c++20 -o main % && ./main<CR><ENTER>', { desc = "Save and run cpp file" })
+keymap.set('n', '<C-b>', ':w | !g++ -std=c++20 -o main % && ./main<CR>', { desc = "Save and run cpp file" })
 
+-- Select all text in insert mode with Ctrl+a
+keymap.set("i", "<C-a>", "<Esc>ggVG<CR>a", { desc = "Select all text" })
+keymap.set("n", "<C-a>", "ggVG<CR>", { desc = "Select all text" })
 
 -- increment/decrement numbers
-keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment
-keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- decrement
+keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" })
+keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" })
 
 -- window management
 keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically

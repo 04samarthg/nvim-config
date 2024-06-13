@@ -21,6 +21,10 @@ return {
                         TelescopePreviewNormal = { bg = theme.ui.bg_m3 },
                         TelescopePreviewBorder = { bg = theme.ui.bg_m3, fg = theme.ui.bg_p5 },
 
+                        -- NvimTree overrides
+                        NvimTreeNormal = { bg = theme.ui.bg_m3, fg = theme.ui.fg_dim },
+                        -- NvimTreePopup = { bg = theme.ui.bg_p1 },
+
                         -- New float window overrides
                         NormalFloat = { bg = theme.ui.bg_p1 },
                         FloatBorder = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
