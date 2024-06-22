@@ -5,7 +5,7 @@ return {
 
 		local ast_grep = {
 			method = null_ls.methods.DIAGNOSTICS,
-			filetypes = { "cpp", "java", "html", "lua", "php", "javascript", "typescript" },
+			filetypes = { "cpp", "java", "html", "lua", "php", "javascript", "typescript", "jsx", "tsx" },
 			generator = {
 				fn = function(params)
 					local diagnostics = {}
