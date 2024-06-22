@@ -3,8 +3,8 @@ require("core")
 
 -- Auto-save input1.txt on text change
 vim.cmd([[
-  autocmd BufWritePost ~/Desktop/stuff/ipf.in :wa
-  autocmd TextChanged,TextChangedI ~/Desktop/stuff/ipf.in silent! write
+  autocmd BufWritePost /home/pheonix/cp/ipf.in :wa
+  autocmd TextChanged,TextChangedI /home/pheonix/cp/ipf.in silent! write
 ]])
 
 if vim.g.CheckUpdateStarted == nil then
