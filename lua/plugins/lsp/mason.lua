@@ -34,7 +34,7 @@ return {
         "svelte",
         "lua_ls",
         "graphql",
-        "clangd",
+        "emmet_ls",
         "prismals",
         "pyright",
       },
@@ -50,6 +50,5 @@ return {
         "eslint_d", -- js linter
       },
     })
-
   end,
 }

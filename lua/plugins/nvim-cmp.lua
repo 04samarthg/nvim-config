@@ -15,6 +15,7 @@ return {
 		"rafamadriz/friendly-snippets", -- useful snippets
 		"onsails/lspkind.nvim", -- vs-code like pictograms
 		"mlaursen/vim-react-snippets",
+    { "roobert/tailwindcss-colorizer-cmp.nvim", config = true }
 	},
 
 	config = function()

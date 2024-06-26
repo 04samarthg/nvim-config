@@ -11,6 +11,9 @@ opt.autoindent = true
 opt.smartindent = true
 opt.pumheight = 10
 
+-- fold chars
+opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+opt.foldcolumn = '1'
 
 -- line numbers
 opt.relativenumber = true -- show relative line numbers
