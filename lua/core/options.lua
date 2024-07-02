@@ -10,6 +10,7 @@ opt.softtabstop = 2
 opt.autoindent = true
 opt.smartindent = true
 opt.pumheight = 10
+--opt.formatoptions = opt.formatoptions .. 'cqrn'
 
 -- fold chars
 opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]

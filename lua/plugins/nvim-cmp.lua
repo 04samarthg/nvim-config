@@ -89,7 +89,7 @@ return {
 
     cmp.setup({
       performance = {
-        max_view_entries = 7,
+        max_view_entries = 10,
       },
       view = {
         entries = { name = "custom", selection_order = "near_cursor" },
@@ -99,41 +99,15 @@ return {
           require("luasnip").lsp_expand(args.body)
         end,
       },
-      mapping = {
-        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-e>"] = cmp.mapping.close(),
-        ["<CR>"] = cmp.mapping.confirm({
-          -- behavior = cmp.ConfirmBehavior.Replace,
-          behavior = cmp.ConfirmBehavior.Insert,
-          select = true,
-        }),
-        ["<Down>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif require("luasnip").expand_or_jumpable() then
-            vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
-          else
-            fallback()
-          end
-        end, {
-          "i",
-          "s",
-        }),
-        ["<Up>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif require("luasnip").jumpable(-1) then
-            vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
-          else
-            fallback()
-          end
-        end, {
-          "i",
-          "s",
-        }),
-      },
+      mapping = cmp.mapping.preset.insert({
+				["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
+				["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
+				["<C-b>"] = cmp.mapping.scroll_docs(-4),
+				["<C-f>"] = cmp.mapping.scroll_docs(4),
+				["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
+				["<C-e>"] = cmp.mapping.abort(), -- close completion window
+				["<CR>"] = cmp.mapping.confirm({ select = true }),
+			}),
       window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
@@ -148,7 +122,7 @@ return {
 
     cmp.setup.filetype("gitcommit", {
       sources = cmp.config.sources({
-        { name = "git" }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
+        { name = "git" }, -- You can specify the git source if [you were installed it](https://github.com/petertriho/cmp-git).
       }, {
         { name = "buffer" },
       }),
