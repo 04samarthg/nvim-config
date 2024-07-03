@@ -39,7 +39,6 @@ return {
       map("n", "<leader>hD", function()
         gs.diffthis("~")
       end, "Diff this ~")
-
       -- Text object
       map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "Gitsigns select hunk")
     end,

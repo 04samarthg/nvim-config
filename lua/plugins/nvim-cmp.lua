@@ -31,6 +31,26 @@ return {
     require("luasnip.loaders.from_vscode").lazy_load()
 		require("vim-react-snippets").lazy_load()
 
+    local lsp_kind = require("lspkind")
+		local cmp_next = function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			elseif require("luasnip").expand_or_jumpable() then
+				vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+			else
+				fallback()
+			end
+		end
+		local cmp_prev = function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item()
+			elseif require("luasnip").jumpable(-1) then
+				vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
+			else
+				fallback()
+			end
+		end
+
     lsp_kind.init()
 
     local formatting_style = {
@@ -107,6 +127,8 @@ return {
 				["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
 				["<C-e>"] = cmp.mapping.abort(), -- close completion window
 				["<CR>"] = cmp.mapping.confirm({ select = true }),
+        ["<tab>"] = cmp_next,
+        ["<C-p>"] = cmp_prev,
 			}),
       window = {
         completion = cmp.config.window.bordered(),
