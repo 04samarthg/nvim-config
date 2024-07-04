@@ -3,6 +3,9 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
     local lualine = require("lualine")
+    local function show_codeium_status()
+      return "{…}" .. vim.fn["codeium#GetStatusString"]()
+    end
     local lazy_status = require("lazy.status") -- to configure lazy pending updates count
 
     local colors = {
@@ -61,6 +64,7 @@ return {
             cond = lazy_status.has_updates,
             color = { fg = "#ff9e64" },
           },
+          { show_codeium_status },
           { "encoding" },
           { "fileformat" },
           { "filetype" },

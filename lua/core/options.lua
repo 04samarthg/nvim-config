@@ -52,3 +52,7 @@ opt.splitbelow = true -- split horizontal window to the bottom
 opt.swapfile = false
 
 opt.autoread = true
+
+vim.g.codeium_filetypes = {
+  ["cpp"] = false,
+}
