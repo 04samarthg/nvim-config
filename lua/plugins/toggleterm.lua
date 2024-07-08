@@ -2,6 +2,7 @@ return {
 
   'akinsho/toggleterm.nvim',
 
+	event = "VeryLazy",
   config = function ()
     require("toggleterm").setup({
   	-- size can be a number or function which is passed the current terminal
@@ -29,7 +30,7 @@ return {
   		-- see :h nvim_win_open for details on borders however
   		-- the 'curved' border is a custom border type
   		-- not natively supported but implemented in this plugin.
-  		border = "single",
+  		border = "rounded",
   		width = math.floor(vim.o.columns * 0.9),
   		height = math.floor(vim.o.lines * 0.9),
   		winblend = 3,

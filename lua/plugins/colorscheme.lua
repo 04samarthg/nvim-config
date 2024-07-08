@@ -3,6 +3,23 @@ return {
         "rebelot/kanagawa.nvim",
         config = function()
             require('kanagawa').setup({
+                colors = {
+                    wave = {
+                      ui = {
+                        float = {
+                          bg = "none",
+                        }
+                      }
+                    },
+                    theme = {
+                        all = {
+                            ui = {
+                                bg_gutter = "none",
+                            }
+                        }
+                    }
+                },
+                transparent = true,
                 overrides = function(colors)
                     local theme = colors.theme
                     return {

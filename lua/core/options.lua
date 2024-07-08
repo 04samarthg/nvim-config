@@ -1,5 +1,5 @@
 vim.cmd("let g:netrw_liststyle = 3")
-
+vim.cmd("let g:codeium_disable_bindings = 1")
 local opt = vim.opt -- for conciseness
 
 --indentation
@@ -54,5 +54,6 @@ opt.swapfile = false
 opt.autoread = true
 
 vim.g.codeium_filetypes = {
+  ["*"] = true,
   ["cpp"] = false,
 }

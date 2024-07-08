@@ -1,4 +1,4 @@
-local iceberg_dark = require "lualine.themes.iceberg_dark"
+-- local iceberg_dark = require "lualine.themes.iceberg_dark"
 return {
   "hrsh7th/nvim-cmp",
   event = "InsertEnter",
@@ -22,14 +22,11 @@ return {
 			build = "make install_jsregexp",
 		},
     "rafamadriz/friendly-snippets",
-    "mlaursen/vim-react-snippets",
   },
 
   config = function()
     local cmp = require("cmp")
-    local lsp_kind = require("lspkind")
     require("luasnip.loaders.from_vscode").lazy_load()
-		require("vim-react-snippets").lazy_load()
 
     local lsp_kind = require("lspkind")
 		local cmp_next = function(fallback)

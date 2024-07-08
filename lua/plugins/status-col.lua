@@ -4,7 +4,7 @@ return {
   config = function()
     local builtin = require("statuscol.builtin")
       require("statuscol").setup({
-        ft_ignore = { "alpha", "nvim-tree", "oil" },
+        ft_ignore = { "alpha", "nvim-tree", "oil", "Lazy", "Mason" },
         segments = {
           { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
           {
