@@ -47,3 +47,12 @@ vim.keymap.set("n", "<leader>q", ":wqa<CR>", { silent = true, desc = "Save and [
 vim.keymap.set("n", "<leader>w", ":w<CR>", { silent = true, desc = "[W]rite" })
 keymap.set("n", "<leader>no", ":Neorg<CR>", {desc = "Opens neorg"})
 
+
+-- Re-select blocks after indenting in visual/select mode
+keymap.set('x', '<', '<gv', { desc = 'Indent Right and Re-select' })
+keymap.set('x', '>', '>gv|', { desc = 'Indent Left and Re-select' })
+
+-- Use tab for indenting in visual/select mode
+keymap.set('v', '<Tab>', '>gv|', { desc = 'Indent Left' })
+keymap.set('v', '<S-Tab>', '<gv', { desc = 'Indent Right' })
+
