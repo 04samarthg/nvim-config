@@ -56,3 +56,13 @@ keymap.set('x', '>', '>gv|', { desc = 'Indent Left and Re-select' })
 keymap.set('v', '<Tab>', '>gv|', { desc = 'Indent Left' })
 keymap.set('v', '<S-Tab>', '<gv', { desc = 'Indent Right' })
 
+
+
+-- Disable default mappings
+vim.g.copilot_no_tab_map = true
+
+-- Custom mappings
+vim.api.nvim_set_keymap("i", "<C-G>", 'copilot#Accept("\\<CR>")', { silent = true, expr = true, script = true })
+vim.api.nvim_set_keymap("i", "<C-X>", 'copilot#Dismiss("\\<CR>")', { silent = true, expr = true, script = true })
+vim.api.nvim_set_keymap("i", "<C-N>", 'copilot#Next()', { silent = true, expr = true, script = true })
+vim.api.nvim_set_keymap("i", "<C-P>", 'copilot#Previous()', { silent = true, expr = true, script = true })

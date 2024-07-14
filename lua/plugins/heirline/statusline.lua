@@ -650,7 +650,7 @@ local DefaultStatusline = {
     FileType,
     { flexible = 3, { FileEncoding }, { provider = "" } },
     Space,
-    CodeiumStats,
+    -- CodeiumStats,
     Space,
     Ruler,
     SearchCount,
