@@ -19,7 +19,7 @@ return {
         vim.api.nvim_win_set_config(win, { zindex = 100 })
       end,
 
-      timeout = 2500,
+      timeout = 3500,
       -- background_colour = "",
     }
     
