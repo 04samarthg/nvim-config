@@ -1,7 +1,7 @@
 -- local iceberg_dark = require "lualine.themes.iceberg_dark"
 return {
   "hrsh7th/nvim-cmp",
-  event = "InsertEnter",
+  -- event = "InsertEnter",
   dependencies = {
     "hrsh7th/cmp-nvim-lsp-signature-help",
     "hrsh7th/cmp-nvim-lsp",

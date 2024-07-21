@@ -53,7 +53,4 @@ opt.swapfile = false
 
 opt.autoread = true
 
-vim.g.codeium_filetypes = {
-  ["*"] = true,
-  ["cpp"] = false,
-}
+-- vim.g.copilot_filetypes = {cpp = false}

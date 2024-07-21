@@ -45,8 +45,6 @@ keymap.set("n", "<C-d>", "<C-d>zz") -- keeps cursor in middle when using CTRL-d
 keymap.set("n", "<C-u>", "<C-u>zz") -- keeps cursor in middle when using CTRL-u
 vim.keymap.set("n", "<leader>q", ":wqa<CR>", { silent = true, desc = "Save and [Q]uit Neovim" })
 vim.keymap.set("n", "<leader>w", ":w<CR>", { silent = true, desc = "[W]rite" })
-keymap.set("n", "<leader>no", ":Neorg<CR>", {desc = "Opens neorg"})
-
 
 -- Re-select blocks after indenting in visual/select mode
 keymap.set('x', '<', '<gv', { desc = 'Indent Right and Re-select' })
@@ -63,6 +61,7 @@ vim.g.copilot_no_tab_map = true
 
 -- Custom mappings
 vim.api.nvim_set_keymap("i", "<C-G>", 'copilot#Accept("\\<CR>")', { silent = true, expr = true, script = true })
-vim.api.nvim_set_keymap("i", "<C-X>", 'copilot#Dismiss("\\<CR>")', { silent = true, expr = true, script = true })
-vim.api.nvim_set_keymap("i", "<C-N>", 'copilot#Next()', { silent = true, expr = true, script = true })
-vim.api.nvim_set_keymap("i", "<C-P>", 'copilot#Previous()', { silent = true, expr = true, script = true })
+-- vim.api.nvim_set_keymap("i", "<C-X>", 'copilot#Dismiss("<CR>")', { silent = true, expr = true, script = true })
+-- vim.api.nvim_set_keymap("i", "<C-N>", 'copilot#Next()', { silent = true, expr = true, script = true })
+-- vim.api.nvim_set_keymap("i", "<C-P>", 'copilot#Previous()', { silent = true, expr = true, script = true })
+vim.api.nvim_set_keymap("i", "<C-X>", 'copilot#Dismiss()', { silent = true, expr = true, script = true })
