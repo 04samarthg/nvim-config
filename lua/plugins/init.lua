@@ -10,15 +10,6 @@ return {
 
   "xiyaowong/transparent.nvim",
 
-  {
-    'github/copilot.vim',
-    config = function ()
-      filetypes = {
-        cpp = false,
-      }
-    end
-  },
-
   { 'echasnovski/mini.ai', version = false },
 
   'mg979/vim-visual-multi',

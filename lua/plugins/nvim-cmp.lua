@@ -21,12 +21,14 @@ return {
 			-- install jsregexp (optional!).
 			build = "make install_jsregexp",
 		},
-    "Exafunction/codeium.vim",
+    "rafamadriz/friendly-snippets",
+    "mlaursen/vim-react-snippets",
   },
 
   config = function()
     local cmp = require("cmp")
     require("luasnip.loaders.from_vscode").lazy_load()
+    require("vim-react-snippets").lazy_load()
 
     local lsp_kind = require("lspkind")
 		local cmp_next = function(fallback)
@@ -54,7 +56,11 @@ return {
       fields = { "kind", "abbr", "menu" },
       format = function(entry, item)
         local icon = lsp_kind.presets.default[item.kind]
-        icon = " " .. icon .. " "
+        if icon then
+          icon = " " .. icon .. " "
+        else
+          icon = " " -- You can replace this with a default icon or an empty space
+        end
 
         local lspkind_text = ({
           -- copilot = "[cop]",
@@ -83,11 +89,12 @@ return {
         return false
       end
     end
-
+    
     local preferred_sources = {
       { name = "nvim_lsp_signature_help", group_index = 1 },
       { name = "nvim_lsp", max_item_count = 20, group_index = 1 },
-      { name = "Codeium", max_item_count = 3, group_index = 1},
+      -- { name = "copilot", max_item_count = 3, group_index = 1 },
+      { name = "codeium", max_item_count = 3, group_index = 1},
       { name = "luasnip", max_item_count = 5, group_index = 1 },
       { name = "nvim_lua", group_index = 1 },
       { name = "path", group_index = 2 },
