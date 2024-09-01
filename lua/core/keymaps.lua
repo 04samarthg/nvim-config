@@ -19,7 +19,7 @@ keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 keymap.set("n", "<leader>js", ":w !node <ENTER>", { desc = "Save and Execute js file using node" })
 
 -- Compile and run C++ code
-keymap.set('n', '<C-b>', ':w | !g++ -std=c++20 -o main % && ~/cp/main<CR>', { desc = "Save and run cpp file" })
+keymap.set('n', '<C-b>', ':w | silent! !ccache distcc g++ -std=c++23 -o main % && ./main<CR>', { noremap = true})
 
 -- Select all text in insert mode with Ctrl+a
 keymap.set("i", "<C-a>", "<Esc>ggVG<CR>a", { desc = "Select all text" })
