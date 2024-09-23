@@ -93,5 +93,11 @@ return {
       vim.cmd.colorscheme "catppuccin-mocha"
     end
   },
+    
+    {
+        "scottmckendry/cyberdream.nvim",
+        lazy = false,
+        priority = 1000,
+    }
 
 }
