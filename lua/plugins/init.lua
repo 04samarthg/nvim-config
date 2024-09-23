@@ -13,5 +13,6 @@ return {
   { 'echasnovski/mini.ai', version = false },
 
   'mg979/vim-visual-multi',
-
+  
+  'HiPhish/rainbow-delimiters.nvim'
 }
