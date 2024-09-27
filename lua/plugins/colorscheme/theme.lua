@@ -100,6 +100,7 @@ return {
         priority = 1000,
         config = function ()
             require('cyberdream').setup({
+                borderless_telescope = false,
                 transparent = true,
             })
         end, 

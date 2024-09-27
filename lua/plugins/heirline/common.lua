@@ -24,7 +24,7 @@ function M.dim(color, n)
 end
 
 M.icons = {
-    -- ✗   󰅖 󰅘 󰅚 󰅙 󱎘 
+    -- ✗   󰅖 󰅘 󰅚 󰅙 󱎘  
     close = "󰅙 ",
     dir = "󰉋 ",
     lsp = " ", --   
