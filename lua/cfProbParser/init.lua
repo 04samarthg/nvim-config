@@ -3,7 +3,6 @@ local M = {}
 -- Store contest ID and problems
 M.contest_id = nil
 M.problems = {}
-M.logged_in = false
 
 -- Configuration options
 M.config = {
@@ -40,52 +39,12 @@ local function parse_io(contest_id, problem_id)
     handle:close()
 end
 
--- Function to handle login
-local function handle_login()
-    if M.logged_in then
-        return true
-    end
-
-    local input = vim.fn.input("Codeforces credentials not found. Do you want to login now? (y/n): ")
-    if input:lower() ~= "y" then
-        print("Login cancelled. You need to be logged in to submit solutions.")
-        return false
-    end
-
-    local cmd = 'python3 ~/cp/cfSubmit.py login'
-    local handle = io.popen(cmd)
-    local result = handle:read("*a")
-    handle:close()
-
-    if result:find("Login successful!") then
-        M.logged_in = true
-        print("Login successful!")
-        return true
-    else
-        print("Login failed. Please try again.")
-        return false
-    end
-end
-
--- Function to submit solution using the Python script
-local function submit_solution(file_path)
-    if not handle_login() then
-        return
-    end
-
-    local cmd = string.format('python3 ~/cp/script.py %s %s %s', M.contest_id, M.current_problem, file_path)
-    local handle = io.popen(cmd)
-    local result = handle:read("*a")
-    handle:close()
-    print("Submission result:")
-    print(result)
-end
-
 -- Function to start Codeforces session
 function M.start()
     vim.ui.input({prompt = "Enter contest ID: "}, function(input)
         if input then
             M.contest_id = input
+            print("Loading contest: " .. M.contest_id )
             parse_problems(M.contest_id)
             print("Contest " .. M.contest_id .. " loaded")
             -- handle_login()
@@ -108,14 +67,14 @@ function M.show()
     local conf = require("telescope.config").values
     local actions = require "telescope.actions"
     local action_state = require "telescope.actions.state"
-    
+
     -- Custom theme for a smaller window
     local custom_theme = require("telescope.themes").get_dropdown({
         width = M.config.telescope_config.width,
         height = M.config.telescope_config.height,
         previewer = false,
     })
-    
+
     pickers.new(custom_theme, {
         prompt_title = "Codeforces Problems",
         finder = finders.new_table {
@@ -133,47 +92,9 @@ function M.show()
             actions.select_default:replace(function()
                 actions.close(prompt_bufnr)
                 local selection = action_state.get_selected_entry()
+                print("Loading problem " .. selection.value.id .. " - " .. selection.value.name)
                 parse_io(M.contest_id, selection.value.id)
                 print("Successfully loaded problem " .. selection.value.id .. " - " .. selection.value.name)
-            end)
-            return true
-        end,
-    }):find()
-end
-
--- Function to submit the current solution
-function M.submit()
-    if not M.contest_id or not M.current_problem then
-        print("No problem selected. Use 'cf show' to select a problem first.")
-        return
-    end
-
-    if not handle_login() then
-        return
-    end
-
-    local pickers = require "telescope.pickers"
-    local finders = require "telescope.finders"
-    local conf = require("telescope.config").values
-    local actions = require "telescope.actions"
-    local action_state = require "telescope.actions.state"
-
-    local custom_theme = require("telescope.themes").get_dropdown({
-        width = M.config.telescope_config.width,
-        height = M.config.telescope_config.height,
-        previewer = false,
-    })
-
-    pickers.new(custom_theme, {
-        prompt_title = "Select file to submit",
-        finder = finders.new_oneshot_job({"find", ".", "-type", "f"},
-            {cwd = vim.fn.getcwd()}),
-        sorter = conf.generic_sorter({}),
-        attach_mappings = function(prompt_bufnr, map)
-            actions.select_default:replace(function()
-                actions.close(prompt_bufnr)
-                local selection = action_state.get_selected_entry()
-                submit_solution(selection[1])
             end)
             return true
         end,

@@ -91,10 +91,10 @@ return {
     end
     
     local preferred_sources = {
+      { name = "codeium", max_item_count = 3, group_index = 1},
       { name = "nvim_lsp_signature_help", group_index = 1 },
       { name = "nvim_lsp", max_item_count = 20, group_index = 1 },
       -- { name = "copilot", max_item_count = 3, group_index = 1 },
-      { name = "codeium", max_item_count = 3, group_index = 1},
       { name = "luasnip", max_item_count = 5, group_index = 1 },
       { name = "nvim_lua", group_index = 1 },
       { name = "path", group_index = 2 },

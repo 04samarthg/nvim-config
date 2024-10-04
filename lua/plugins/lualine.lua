@@ -17,9 +17,9 @@ return {
 			blue = "#89b4fa",
 			magenta = "#dd7733",
 			cyan = "#94e2d5",
-			white = "#1e1e1e",
+			white = "#ffffff",
 			orange = "#fab387",
-			grey = "#1e1e1e",
+			grey = "#6c7086",
 		}
 
 		local conditions = {
@@ -69,7 +69,7 @@ return {
 				section_separators = "",
 				theme = {
 					-- setting defaults to statusline
-					normal = { c = { fg = colors.white, bg = colors.bg } },
+					normal = { c = { fg = colors.black, bg = colors.bg } },
 					inactive = { c = { fg = colors.grey, bg = colors.bg } },
 				},
 			},
@@ -150,7 +150,7 @@ return {
 				return icon:gsub("%s+", "")
 			end,
 			color = function()
-				return { bg = mode_color[vim.fn.mode()], fg = colors.white }
+				return { bg = mode_color[vim.fn.mode()], fg = colors.black }
 			end,
 			padding = { left = 1, right = 1 },
 			separator = { right = "", left = "" },
@@ -159,7 +159,7 @@ return {
 			"filename",
 			cond = conditions.buffer_not_empty,
 			color = function()
-				return { bg = mode_color[vim.fn.mode()], fg = colors.white }
+				return { bg = mode_color[vim.fn.mode()], fg = colors.black }
 			end,
 			padding = { left = 1, right = 1 },
 			separator = { right = "", left = "" },
@@ -238,7 +238,7 @@ return {
 		})
 		active_right({
 			"location",
-			color = { bg = colors.red, fg = colors.white },
+			color = { bg = colors.red, fg = colors.black },
 			padding = { left = 1, right = 0 },
 			separator = { left = "" },
 		})
@@ -248,7 +248,7 @@ return {
 				local total = vim.fn.line("$")
 				return string.format("%2d%%%%", math.floor(cur / total * 100))
 			end,
-			color = { bg = colors.red, fg = colors.white },
+			color = { bg = colors.red, fg = colors.black },
 			padding = { left = 1, right = 1 },
 			cond = conditions.hide_in_width,
 			separator = { right = "" },
