@@ -1,9 +1,9 @@
 return {
   "windwp/nvim-autopairs",
-  event = { "InsertEnter" },
   dependencies = {
     "hrsh7th/nvim-cmp",
   },
+  ft = {"javscript", "typescript", "javascriptreact", "typescriptreact", "svelte", "vue", "tsx", "jsx"},
   config = function()
     -- import nvim-autopairs
     local autopairs = require("nvim-autopairs")

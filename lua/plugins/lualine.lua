@@ -1,7 +1,7 @@
 return {
 	"nvim-lualine/lualine.nvim",
 	event = "VeryLazy",
-	dependencies = { 'nvim-tree/nvim-web-devicons' },
+	dependencies = { "nvim-tree/nvim-web-devicons" },
 	init = function()
 		-- disable until lualine loads
 		vim.opt.laststatus = 0
@@ -21,6 +21,7 @@ return {
 			orange = "#fab387",
 			grey = "#6c7086",
 		}
+
 
 		local conditions = {
 			buffer_not_empty = function()
@@ -117,11 +118,13 @@ return {
 
 		-- dump object contents
 		local function dump(o)
-			if type(o) == 'table' then
-				local s = ''
+			if type(o) == "table" then
+				local s = ""
 				for k, v in pairs(o) do
-					if type(k) ~= 'number' then k = '"' .. k .. '"' end
-					s = s .. dump(v) .. ','
+					if type(k) ~= "number" then
+						k = '"' .. k .. '"'
+					end
+					s = s .. dump(v) .. ","
 				end
 				return s
 			else
@@ -133,19 +136,19 @@ return {
 		active_left({
 			function()
 				local icon
-				local ok, devicons = pcall(require, 'nvim-web-devicons')
+				local ok, devicons = pcall(require, "nvim-web-devicons")
 				if ok then
-					icon = devicons.get_icon(vim.fn.expand('%:t'))
+					icon = devicons.get_icon(vim.fn.expand("%:t"))
 					if icon == nil then
 						icon = devicons.get_icon_by_filetype(vim.bo.filetype)
 					end
 				else
-					if vim.fn.exists('*WebDevIconsGetFileTypeSymbol') > 0 then
+					if vim.fn.exists("*WebDevIconsGetFileTypeSymbol") > 0 then
 						icon = vim.fn.WebDevIconsGetFileTypeSymbol()
 					end
 				end
 				if icon == nil then
-					icon = ''
+					icon = ""
 				end
 				return icon:gsub("%s+", "")
 			end,
@@ -170,18 +173,17 @@ return {
 				newfile = " ",
 			},
 		})
-		active_left({
+		active_right({
 			"branch",
-			icon = "",
+			icon = "",
 			color = { bg = colors.blue, fg = colors.black },
 			padding = { left = 0, right = 1 },
 			separator = { right = "", left = "" },
 		})
 
-		-- inactive left section
 		inactive_left({
 			function()
-				return ''
+				return ""
 			end,
 			cond = conditions.buffer_not_empty,
 			color = { bg = colors.black, fg = colors.grey },
@@ -201,26 +203,6 @@ return {
 			},
 		})
 
-		-- active right section
-		active_right({
-			function()
-				local clients = vim.lsp.get_active_clients()
-				local clients_list = {}
-				for _, client in pairs(clients) do
-					if (not clients_list[client.name]) then
-						table.insert(clients_list, client.name)
-					end
-				end
-				local lsp_lbl = dump(clients_list):gsub("(.*),", "%1")
-				return lsp_lbl:gsub(",", ", ")
-			end,
-			icon = " ",
-			color = { bg = colors.green, fg = colors.black },
-			padding = { left = 1, right = 1 },
-			cond = conditions.hide_in_width_first,
-			separator = { right = "", left = "" },
-		})
-
 		active_right({
 			"diagnostics",
 			sources = { "nvim_diagnostic" },
@@ -236,64 +218,7 @@ return {
 			padding = { left = 1, right = 1 },
 			separator = { right = "", left = "" },
 		})
-		active_right({
-			"location",
-			color = { bg = colors.red, fg = colors.black },
-			padding = { left = 1, right = 0 },
-			separator = { left = "" },
-		})
-		active_right({
-			function()
-				local cur = vim.fn.line(".")
-				local total = vim.fn.line("$")
-				return string.format("%2d%%%%", math.floor(cur / total * 100))
-			end,
-			color = { bg = colors.red, fg = colors.black },
-			padding = { left = 1, right = 1 },
-			cond = conditions.hide_in_width,
-			separator = { right = "" },
-		})
-		active_right({
-			"o:encoding",
-			fmt = string.upper,
-			cond = conditions.hide_in_width,
-			padding = { left = 1, right = 1 },
-			color = { bg = colors.blue, fg = colors.black },
-		})
-		active_right({
-			"fileformat",
-			fmt = string.lower,
-			icons_enabled = false,
-			cond = conditions.hide_in_width,
-			color = { bg = colors.blue, fg = colors.black },
-			separator = { right = "" },
-			padding = { left = 0, right = 1 },
-		})
 
-		-- inactive right section
-		inactive_right({
-			"location",
-			color = { bg = colors.black, fg = colors.grey },
-			padding = { left = 1, right = 0 },
-			separator = { left = "" },
-		})
-		inactive_right({
-			"progress",
-			color = { bg = colors.black, fg = colors.grey },
-			cond = conditions.hide_in_width,
-			padding = { left = 1, right = 1 },
-			separator = { right = "" },
-		})
-		inactive_right({
-			"fileformat",
-			fmt = string.lower,
-			icons_enabled = false,
-			cond = conditions.hide_in_width,
-			color = { bg = colors.black, fg = colors.grey },
-			separator = { right = "" },
-			padding = { left = 0, right = 1 },
-		})
-		--
 		return config
 	end,
 }

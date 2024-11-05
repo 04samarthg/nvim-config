@@ -5,6 +5,7 @@ return {
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope.nvim",
     },
+    ft = "cpp",
     config = function()
         local codeforces = require("cfProbParser")
         vim.api.nvim_create_user_command("CFStart", codeforces.start, {})

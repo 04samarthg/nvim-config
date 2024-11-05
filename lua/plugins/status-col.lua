@@ -1,6 +1,7 @@
 return {
   "luukvbaal/statuscol.nvim",
   dependencies = { "lewis6991/gitsigns.nvim" },
+  event = "BufReadPost",
   config = function()
     local builtin = require("statuscol.builtin")
       require("statuscol").setup({

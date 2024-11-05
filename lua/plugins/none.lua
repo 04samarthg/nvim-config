@@ -1,11 +1,12 @@
 return {
 	"nvimtools/none-ls.nvim",
+	event = "BufReadPost",
 	config = function()
 		local null_ls = require("null-ls")
 
 		local ast_grep = {
 			method = null_ls.methods.DIAGNOSTICS,
-			filetypes = { "cpp", "java", "html", "lua", "php", "javascript", "typescript", "jsx", "tsx" },
+			filetypes = { "python", "cpp", "java", "html", "lua", "php", "javascript", "typescript", "jsx", "tsx" },
 			generator = {
 				fn = function(params)
 					local diagnostics = {}
@@ -47,6 +48,8 @@ return {
 
 				-- Add JavaScript/TypeScript formatter (Prettier)
 				null_ls.builtins.formatting.prettier,
+
+				null_ls.builtins.formatting.black,
 
 				-- Add C++ formatter (clang_format)
 				-- null_ls.builtins.formatting.clang_format,

@@ -1,5 +1,6 @@
 return {
     "dcampos/nvim-snippy",
+    event = "BufReadPost",
     config = function()
         require("snippy").setup({
             mappings = {
