@@ -1,7 +1,7 @@
 return {
   {
     "williamboman/mason.nvim",
-    event = { "BufReadPre", "BufNewFile" },
+    event = "BufReadPost",
     config = function()
       require("mason").setup({
         ui = {
@@ -17,7 +17,8 @@ return {
 
   {
     "williamboman/mason-lspconfig.nvim",
-    after = "mason.nvim",
+    -- after = "mason.nvim",
+    event = "BufReadPost",
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = {
@@ -33,7 +34,8 @@ return {
 
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
-    after = { "mason.nvim", "mason-lspconfig.nvim" },
+    -- after = { "mason.nvim"},
+    event = "BufReadPost",
     config = function()
       require("mason-tool-installer").setup({
         ensure_installed = {
