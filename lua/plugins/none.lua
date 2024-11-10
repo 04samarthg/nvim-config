@@ -1,6 +1,6 @@
 return {
 	"nvimtools/none-ls.nvim",
-	event = "BufReadPost",
+	keys = {"<leader>gf"},
 	config = function()
 		local null_ls = require("null-ls")
 

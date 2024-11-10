@@ -1,7 +1,7 @@
 return {
   'echasnovski/mini.animate',
   version = false,
-  event = "VimEnter",
+  event = "BufReadPost",
   config = function()
     
 

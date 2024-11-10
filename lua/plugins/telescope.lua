@@ -7,6 +7,7 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   cmd = "Telescope",
+  keys = { "<leader>ff", "<leader>fr", "<leader>fs", "<leader>fc" },
   config = function()
     local telescope = require("telescope")
     local actions = require("telescope.actions")

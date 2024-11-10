@@ -1,7 +1,5 @@
 return {
 		"folke/flash.nvim",
-		event = "BufReadPost",
-		opts = {},
 		keys = {
 			{
 				"<space>s",

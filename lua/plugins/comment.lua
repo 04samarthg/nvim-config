@@ -1,6 +1,6 @@
 return {
   "numToStr/Comment.nvim",
-  event = { "BufReadPre", "BufNewFile" },
+  keys = {"gc", "gcc", "gbc", "gb"},
   dependencies = {
     "JoosepAlviste/nvim-ts-context-commentstring",
   },

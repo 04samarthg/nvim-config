@@ -1,6 +1,6 @@
 return {
   "rmagatti/auto-session",
-  event = "VimEnter", 
+  cmd = "SessionRestore",
   config = function()
     local auto_session = require("auto-session")
 

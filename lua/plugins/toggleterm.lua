@@ -2,7 +2,7 @@ return {
 
   'akinsho/toggleterm.nvim',
 
-	event = "VeryLazy",
+  keys = {"<C-z>"},
   config = function ()
     require("toggleterm").setup({
   	-- size can be a number or function which is passed the current terminal
