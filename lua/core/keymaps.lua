@@ -20,6 +20,7 @@ keymap.set("n", "<leader>js", ":w !node <ENTER>", { desc = "Save and Execute js 
 
 -- Compile and run C++ code
 keymap.set('n', '<C-b>', ':w | !time g++ --std=c++20 -o main % && ./main<CR>')
+keymap.set('n', '<C-l>', ':w | !time g++ --std=c++20 --debug -o main % && ./main<CR>')
 
 -- Select all text in insert mode with Ctrl+a
 keymap.set("i", "<C-a>", "<Esc>ggVG<CR>a", { desc = "Select all text" })
