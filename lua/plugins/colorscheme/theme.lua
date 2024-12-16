@@ -104,7 +104,7 @@ return {
             hide_fillchars = true,
             theme = {
                 colors = {
-                    bg = "#000000",
+                    bg = "#1e1e2e",
                     popup_bg = "#222222",
                     popup_border = "#444444",
                 },

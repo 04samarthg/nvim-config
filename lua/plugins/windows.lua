@@ -8,4 +8,9 @@ return {
 			require("windows").setup()
 		end,
 	},
+	{
+		"nvim-zh/colorful-winsep.nvim",
+		config = true,
+		event = { "WinLeave" },
+	}
 }

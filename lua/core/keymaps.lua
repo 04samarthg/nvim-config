@@ -20,7 +20,6 @@ keymap.set("n", "<leader>js", ":w !node <ENTER>", { desc = "Save and Execute js 
 
 -- Compile and run C++ code
 keymap.set('n', '<C-b>', ':w | !time g++ --std=c++20 -o main % && ./main<CR>')
-keymap.set('n', '<C-l>', ':w | !time g++ --std=c++20 --debug -o main % && ./main<CR>')
 
 -- Select all text in insert mode with Ctrl+a
 keymap.set("i", "<C-a>", "<Esc>ggVG<CR>a", { desc = "Select all text" })
@@ -45,7 +44,7 @@ keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer
 keymap.set("n", "<C-d>", "<C-d>zz") -- keeps cursor in middle when using CTRL-d
 keymap.set("n", "<C-u>", "<C-u>zz") -- keeps cursor in middle when using CTRL-u
 vim.keymap.set("n", "<leader>q", ":wqa<CR>", { silent = true, desc = "Save and [Q]uit Neovim" })
-vim.keymap.set("n", "<leader>w", ":w<CR>", { silent = true, desc = "[W]rite" })
+vim.keymap.set("n", "<leader>w", ":wa<CR>", { silent = true, desc = "[W]rite" })
 
 -- Re-select blocks after indenting in visual/select mode
 keymap.set('x', '<', '<gv', { desc = 'Indent Right and Re-select' })
@@ -58,12 +57,6 @@ keymap.set('v', '<S-Tab>', '<gv', { desc = 'Indent Right' })
 keymap.set('n', '<leader>cf', "<cmd>CFStart<CR>", { desc = "Start the CF plugin"})
 keymap.set('n', '<leader>cn', "<cmd>CFShow<CR>", {desc = "Select the problem to parse"})
 
-if vim.g.neovide then
-    keymap.set({ "n", "v" }, "<C-=>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>")
-    keymap.set({ "n", "v" }, "<C-->", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>")
-    keymap.set({ "n", "v" }, "<C-0>", ":lua vim.g.neovide_scale_factor = 1<CR>")
-end
-
 -- Disable default mappings
 -- vim.g.copilot_no_tab_map = true
 --
@@ -74,13 +67,3 @@ end
 -- vim.api.nvim_set_keymap("i", "<C-P>", 'copilot#Previous()', { silent = true, expr = true, script = true })
 -- vim.api.nvim_set_keymap("i", "<C-X>", 'copilot#Dismiss()', { silent = true, expr = true, script = true })
 
--- DAP
-vim.api.nvim_set_keymap("n", "<F5>", ":lua require'dap'.continue()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<F10>", ":lua require'dap'.step_over()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<F11>", ":lua require'dap'.step_into()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<F12>", ":lua require'dap'.step_out()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>db", ":lua require'dap'.toggle_breakpoint()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>dB", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>dl", ":lua require'dap'.run_last()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>du", ":lua require'dapui'.toggle()<CR>", { noremap = true, silent = true })
