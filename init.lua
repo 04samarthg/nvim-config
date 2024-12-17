@@ -21,6 +21,22 @@ function CheckUpdate()
     end)
 end
 
+-- ─────────────────── Load cp_templates configuration ───────────────────
+
+local cp_templates = require('cp_templates')
+
+cp_templates.setup({})
+
+-- Define commands
+vim.api.nvim_create_user_command('CPTemplate', function(opts)
+    if opts.args ~= "" then
+        cp_templates.insert_template(opts.args)
+    else
+        cp_templates.select_and_insert_template()
+    end
+end, {nargs = "?"})
+
+-- ------------------------------------------------------------------------
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then

@@ -56,6 +56,7 @@ keymap.set('v', '<S-Tab>', '<gv', { desc = 'Indent Right' })
 
 keymap.set('n', '<leader>cf', "<cmd>CFStart<CR>", { desc = "Start the CF plugin"})
 keymap.set('n', '<leader>cn', "<cmd>CFShow<CR>", {desc = "Select the problem to parse"})
+keymap.set("n" ,"<Leader>cp",":CPTemplate<CR>",opts)
 
 -- Disable default mappings
 -- vim.g.copilot_no_tab_map = true
