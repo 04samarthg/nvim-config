@@ -1,5 +1,3 @@
--- File: ~/.config/nvim/lua/cp_templates_config.lua
-
 local M = {}
 
 M.config = {
