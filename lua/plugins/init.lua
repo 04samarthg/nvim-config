@@ -1,6 +1,5 @@
 return {
-  "nvim-lua/plenary.nvim",-- lua functions that many plugins use
-
+  "nvim-lua/plenary.nvim",
   {
     'mg979/vim-visual-multi',
     event = "BufReadPost",
@@ -9,4 +8,5 @@ return {
     'HiPhish/rainbow-delimiters.nvim',
     event = "BufReadPost",
   },
+  "sphamba/smear-cursor.nvim",
 }
