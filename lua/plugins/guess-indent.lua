@@ -6,6 +6,6 @@ return {
     local default_config = {
       auto_cmd = false
     }
-    vim.cmd([[ autocmd BufReadPost * :silent GuessIndent ]])
+    vim.cmd([[ autocmd BufReadPost * :silent! GuessIndent ]])
   end,
 }

@@ -189,6 +189,36 @@ local function write_test_case(test_case)
     end
 end
 
+-- New function to directly navigate to a test case by number
+local function navigate_to_testcase(number)
+    return function()
+        if not server_ready then
+            vim.notify('Starting server...', vim.log.levels.INFO)
+            start_server(function()
+                navigate_to_testcase(number)()
+            end)
+            return
+        end
+
+        local test_cases = fetch_test_cases()
+        
+        if #test_cases == 0 then
+            vim.notify('No test cases available', vim.log.levels.WARN)
+            return
+        end
+
+        -- Find the test case with matching ID
+        for _, test_case in ipairs(test_cases) do
+            if test_case.id == number then
+                write_test_case(test_case)
+                return
+            end
+        end
+        
+        vim.notify('Test case ' .. number .. ' not found', vim.log.levels.WARN)
+    end
+end
+
 -- Create test case picker
 function M.pick_test_case()
     if not server_ready then
@@ -256,9 +286,14 @@ function M.setup(opts)
         end)
     end, {})
     
-    -- Set up keymapping
+    -- Set up telescope picker keymapping
     if opts.keymap then
         vim.keymap.set('n', opts.keymap, function() M.pick_test_case() end, { desc = 'Pick test case' })
+    end
+
+    -- Set up direct navigation keymaps (1-9)
+    for i = 1, 9 do
+        vim.keymap.set('n', '<M-' .. i .. '>', navigate_to_testcase(i), { desc = 'Load Test Case ' .. i })
     end
 
     -- Ensure server is stopped when Neovim exits

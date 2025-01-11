@@ -1,11 +1,12 @@
--- return {
+return {
 
 -- A dark and light theme ported from the Visual Studio Code TokyoNight theme.
 -- {
--- 	'folke/tokyonight.nvim',
--- 	opts = {
--- 		style = 'night',
--- 	},
+--   "folke/tokyonight.nvim",
+--   lazy = false,
+--   priority = 1000,
+--   opts = {},
+-- },
 -- },
 --  { "rose-pine/neovim", name = "rose-pine-moon" },
 --  {
@@ -93,7 +94,7 @@
 --      vim.cmd.colorscheme "catppuccin-mocha"
 --    end
 --  },
-return {
+ {
     "scottmckendry/cyberdream.nvim",
     lazy = false,
     priority = 1000,
@@ -120,4 +121,4 @@ return {
     end,
 }
 
--- }
+}

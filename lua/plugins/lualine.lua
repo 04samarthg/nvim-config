@@ -111,27 +111,6 @@ return {
 			table.insert(config.sections.lualine_x, component)
 		end
 
-		-- insert inactive component in lualine_x at right section
-		local function inactive_right(component)
-			table.insert(config.inactive_sections.lualine_x, component)
-		end
-
-		-- dump object contents
-		local function dump(o)
-			if type(o) == "table" then
-				local s = ""
-				for k, v in pairs(o) do
-					if type(k) ~= "number" then
-						k = '"' .. k .. '"'
-					end
-					s = s .. dump(v) .. ","
-				end
-				return s
-			else
-				return tostring(o)
-			end
-		end
-
 		-- active left section
 		active_left({
 			function()

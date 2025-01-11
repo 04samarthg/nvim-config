@@ -9,4 +9,8 @@ return {
     event = "BufReadPost",
   },
   "sphamba/smear-cursor.nvim",
+  {
+    "stevearc/dressing.nvim",
+    event = "VeryLazy",
+  },
 }
