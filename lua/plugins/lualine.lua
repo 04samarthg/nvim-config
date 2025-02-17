@@ -22,7 +22,7 @@ return {
 			grey = "#6c7086",
 		}
 
-
+		-- Conditions
 		local conditions = {
 			buffer_not_empty = function()
 				return vim.fn.empty(vim.fn.expand("%:t")) ~= 1
@@ -39,7 +39,8 @@ return {
 				return gitdir and #gitdir > 0 and #gitdir < #filepath
 			end,
 		}
-		-- auto change color according to neovims mode
+
+		-- Mode colors
 		local mode_color = {
 			n = colors.red,
 			i = colors.green,
@@ -62,56 +63,45 @@ return {
 			["!"] = colors.red,
 			t = colors.red,
 		}
-		-- config
+
+		-- Lualine config
 		local config = {
 			options = {
-				-- remove default sections and component separators
 				component_separators = "",
 				section_separators = "",
 				theme = {
-					-- setting defaults to statusline
 					normal = { c = { fg = colors.black, bg = colors.bg } },
 					inactive = { c = { fg = colors.grey, bg = colors.bg } },
 				},
 			},
 			sections = {
-				-- clear defaults
 				lualine_a = {},
 				lualine_b = {},
 				lualine_y = {},
 				lualine_z = {},
-				-- clear for later use
 				lualine_c = {},
 				lualine_x = {},
 			},
 			inactive_sections = {
-				-- clear defaults
 				lualine_a = {},
 				lualine_b = {},
 				lualine_y = {},
 				lualine_z = {},
-				-- clear for later use
 				lualine_c = {},
 				lualine_x = {},
 			},
 		}
 
-		-- insert active component in lualine_c at left section
+		-- Utility functions to add components
 		local function active_left(component)
 			table.insert(config.sections.lualine_c, component)
 		end
 
-		-- insert inactive component in lualine_c at left section
-		local function inactive_left(component)
-			table.insert(config.inactive_sections.lualine_c, component)
-		end
-
-		-- insert active component in lualine_x at right section
 		local function active_right(component)
 			table.insert(config.sections.lualine_x, component)
 		end
 
-		-- active left section
+		-- Other components (Filename, Branch, etc.)
 		active_left({
 			function()
 				local icon
@@ -137,6 +127,7 @@ return {
 			padding = { left = 1, right = 1 },
 			separator = { right = "", left = "" },
 		})
+
 		active_left({
 			"filename",
 			cond = conditions.buffer_not_empty,
@@ -152,6 +143,24 @@ return {
 				newfile = " ",
 			},
 		})
+
+		-- Macro recording indicator
+		active_left({
+			function()
+				local recording_register = vim.fn.reg_recording()
+				if recording_register ~= "" then
+					return "雷 " .. recording_register
+				end
+				return ""
+			end,
+			cond = function()
+				return vim.fn.reg_recording() ~= ""
+			end,
+			color = { fg = colors.black, bg = colors.green },
+			padding = { left = 1, right = 1 },
+			separator = { right = ""},
+		})
+
 		active_right({
 			"branch",
 			icon = "",
@@ -160,28 +169,7 @@ return {
 			separator = { right = "", left = "" },
 		})
 
-		inactive_left({
-			function()
-				return ""
-			end,
-			cond = conditions.buffer_not_empty,
-			color = { bg = colors.black, fg = colors.grey },
-			padding = { left = 1, right = 1 },
-		})
-		inactive_left({
-			"filename",
-			cond = conditions.buffer_not_empty,
-			color = { bg = colors.black, fg = colors.grey },
-			padding = { left = 1, right = 1 },
-			separator = { right = "" },
-			symbols = {
-				modified = "",
-				readonly = "",
-				unnamed = "",
-				newfile = "",
-			},
-		})
-
+		-- Diagnostics
 		active_right({
 			"diagnostics",
 			sources = { "nvim_diagnostic" },
@@ -191,6 +179,7 @@ return {
 			padding = { left = 1, right = 1 },
 			separator = { right = "", left = "" },
 		})
+
 		active_right({
 			"searchcount",
 			color = { bg = colors.cyan, fg = colors.black },

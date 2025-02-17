@@ -22,7 +22,7 @@ keymap.set("n", "<leader>js", ":w !node <ENTER>", { desc = "Save and Execute js 
 keymap.set('n', '<C-b>', ':w | !time g++ --std=c++20 -o main % && ./main<CR>')
 
 -- Select all text in insert mode with Ctrl+a
-keymap.set("i", "<C-a>", "<Esc>ggVG<CR>a", { desc = "Select all text" })
+keymap.set("i", "<C-a>", "<ESC>ggVG<CR>a", { desc = "Select all text" })
 keymap.set("n", "<C-a>", "ggVG<CR>", { desc = "Select all text" })
 
 -- increment/decrement numbers
@@ -45,10 +45,8 @@ keymap.set("n", "<C-d>", "<C-d>zz") -- keeps cursor in middle when using CTRL-d
 keymap.set("n", "<C-u>", "<C-u>zz") -- keeps cursor in middle when using CTRL-u
 vim.keymap.set("n", "<leader>q", ":wqa<CR>", { silent = true, desc = "Save and [Q]uit Neovim" })
 vim.keymap.set("n", "<leader>w", ":wa<CR>", { silent = true, desc = "[W]rite" })
-
--- Re-select blocks after indenting in visual/select mode
-keymap.set('x', '<', '<gv', { desc = 'Indent Right and Re-select' })
-keymap.set('x', '>', '>gv|', { desc = 'Indent Left and Re-select' })
+keymap.set("n", "<C-S-down>", "ddjP", {silent = true, desc = "Move line down"})
+keymap.set("n", "<C-S-up>", "ddkP", {silent = true, desc = "Move line up"})
 
 -- Use tab for indenting in visual/select mode
 keymap.set('v', '<Tab>', '>gv|', { desc = 'Indent Left' })

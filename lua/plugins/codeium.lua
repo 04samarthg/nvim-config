@@ -4,7 +4,7 @@ return{
         "nvim-lua/plenary.nvim",
         "hrsh7th/nvim-cmp",
     },
-    event = "BufReadPost",
+    event = "VeryLazy",
     config = function()
         require("codeium").setup({
         })

@@ -8,7 +8,6 @@ return {
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-cmdline",
     "saadparwaiz1/cmp_luasnip",
-    "hrsh7th/cmp-nvim-lua",
     "onsails/lspkind-nvim",
     "roobert/tailwindcss-colorizer-cmp.nvim",
     "L3MON4D3/LuaSnip",
@@ -22,25 +21,6 @@ return {
     require("vim-react-snippets").lazy_load()
 
     local lsp_kind = require("lspkind")
-    local cmp_next = function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif require("luasnip").expand_or_jumpable() then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
-      else
-        fallback()
-      end
-    end
-    local cmp_prev = function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif require("luasnip").jumpable(-1) then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
-      else
-        fallback()
-      end
-    end
-
     lsp_kind.init()
 
     local formatting_style = {
@@ -48,9 +28,9 @@ return {
       format = function(entry, item)
         local icon = lsp_kind.presets.default[item.kind]
         if icon then
-          icon = " " .. icon .. " "
+          icon = icon .. " "
         else
-          icon = " "
+          icon = " "
         end
 
         local lspkind_text = ({
@@ -79,14 +59,14 @@ return {
         return false
       end
     end
-    
+
     local preferred_sources = {
-      { name = "codeium", max_item_count = 3, group_index = 1},
+      { name = "codeium",                 max_item_count = 3,  group_index = 1 },
       { name = "nvim_lsp_signature_help", group_index = 1 },
-      { name = "nvim_lsp", max_item_count = 20, group_index = 1 },
-      { name = "luasnip", max_item_count = 5, group_index = 1 },
-      { name = "nvim_lua", group_index = 1 },
-      { name = "path", group_index = 2 },
+      { name = "nvim_lsp",                max_item_count = 20, group_index = 1 },
+      { name = "luasnip",                 max_item_count = 5,  group_index = 1 },
+      { name = "nvim_lua",                group_index = 1 },
+      { name = "path",                    group_index = 2 },
     }
 
     vim.api.nvim_create_autocmd("BufRead", {
@@ -102,6 +82,7 @@ return {
       end,
     })
 
+
     cmp.setup({
       performance = {
         max_view_entries = 10,
@@ -115,22 +96,19 @@ return {
         end,
       },
       mapping = cmp.mapping.preset.insert({
-        ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
-        ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
-        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
-        ["<C-e>"] = cmp.mapping.abort(), -- close completion window
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-e>"] = cmp.mapping.abort(),
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
-        ["<tab>"] = cmp_next,
-        ["<C-p>"] = cmp_prev,
       }),
       window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
+        completion = cmp.config.window.bordered({
+          winhighlight = "Normal:Pmenu,FloatBorder:PmenuBorder,CursorLine:PmenuSel,Search:None",
+        }),
+        documentation = cmp.config.window.bordered({
+          winhighlight = "Normal:Pmenu,FloatBorder:PmenuBorder,CursorLine:PmenuSel,Search:None",
+        }),
       },
       formatting = formatting_style,
-
       sources = cmp.config.sources(vim.tbl_extend("force", preferred_sources, {
         { name = "buffer", keyword_length = 4 },
       })),
@@ -142,7 +120,7 @@ return {
         { name = "buffer" },
       },
     })
-    
+
     cmp.setup.cmdline(":", {
       mapping = cmp.mapping.preset.cmdline(),
       sources = cmp.config.sources({
@@ -156,5 +134,23 @@ return {
         },
       }),
     })
+
+    -- Darker popup window
+    vim.api.nvim_set_hl(0, "Pmenu", { bg = "#181825", fg = "#cdd6f4" })             -- Darker background
+    vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#45475a", fg = "#cdd6f4", bold = true }) -- Highlighted selection
+    vim.api.nvim_set_hl(0, "PmenuBorder", { fg = "#cba6f7" })                       -- Purple border
+
+    -- Fix text appearance
+    vim.api.nvim_set_hl(0, "CmpItemAbbr", { fg = "#cdd6f4", bg = "NONE" })                             -- Normal text
+    vim.api.nvim_set_hl(0, "CmpItemAbbrDeprecated", { fg = "#7f849c", bg = "NONE", strikethrough = true }) -- Deprecated
+    vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { fg = "#fab387", bold = true })                        -- Matched characters
+    vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#fab387", bold = true })                   -- Fuzzy matched text
+
+    -- Gutter/icons area
+    vim.api.nvim_set_hl(0, "CmpItemKindDefault", { fg = "#cba6f7", bg = "NONE" }) -- Default icon color
+    vim.api.nvim_set_hl(0, "CmpItemKindVariable", { fg = "#f38ba8", bg = "NONE" }) -- Variables
+    vim.api.nvim_set_hl(0, "CmpItemKindFunction", { fg = "#a6e3a1", bg = "NONE" }) -- Functions
+    vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { fg = "#89b4fa", bg = "NONE" }) -- Keywords
+    vim.api.nvim_set_hl(0, "CmpItemMenu", { fg = "#7f849c", bg = "NONE" }) -- Darken the source text
   end,
 }
