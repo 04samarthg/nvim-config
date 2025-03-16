@@ -10,7 +10,7 @@ return {
 		-- Catppuccin Mocha colors
 		local colors = {
 			bg = "",
-			black = "#181825",
+			black = "#121220",
 			red = "#f38ba8",
 			green = "#a6e3a1",
 			yellow = "#f9e2af",
@@ -67,10 +67,11 @@ return {
 		-- Lualine config
 		local config = {
 			options = {
-				component_separators = "",
+                globalstatus = true,
 				section_separators = "",
+				component_separators = "",
 				theme = {
-					normal = { c = { fg = colors.black, bg = colors.bg } },
+					normal = { c = { fg = colors.black, bg = colors.black } },
 					inactive = { c = { fg = colors.grey, bg = colors.bg } },
 				},
 			},
@@ -186,6 +187,8 @@ return {
 			padding = { left = 1, right = 1 },
 			separator = { right = "", left = "" },
 		})
+
+		vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#6c7086", bg = "#151520" }) -- Darker border effect
 
 		return config
 	end,

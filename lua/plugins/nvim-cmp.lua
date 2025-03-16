@@ -30,7 +30,7 @@ return {
         if icon then
           icon = icon .. " "
         else
-          icon = " "
+          icon = "  "
         end
 
         local lspkind_text = ({
