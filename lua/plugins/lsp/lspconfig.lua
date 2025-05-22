@@ -4,7 +4,7 @@ return {
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
     { "antosha417/nvim-lsp-file-operations", config = true },
-    { "folke/neodev.nvim", opts = {} },
+    { "folke/neodev.nvim",                   opts = {} },
   },
   config = function()
     -- import lspconfig plugin
@@ -53,12 +53,6 @@ return {
         opts.desc = "Show line diagnostics"
         keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
 
-        opts.desc = "Go to previous diagnostic"
-        keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
-
-        opts.desc = "Go to next diagnostic"
-        keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
-
         opts.desc = "Show documentation for what is under cursor"
         keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
@@ -73,10 +67,18 @@ return {
     -- Change the Diagnostic symbols in the sign column (gutter)
     -- (not in youtube nvim video)
     local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-    for type, icon in pairs(signs) do
-      local hl = "DiagnosticSign" .. type
-      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-    end
+		for type, icon in pairs(signs) do
+			local hl = "DiagnosticSign" .. type
+			-- vim.diagnostic.config(hl, { text = icon, texthl = hl, numhl = "" })
+			vim.diagnostic.config({
+				signs = {
+					text = icon,
+					linehl = hl,
+					numhl = "",
+				},
+			})
+		end
+    vim.diagnostic.config({ virtual_text = true, signs = true, underline = true, update_in_insert = false, severity_sort = true })
 
     mason_lspconfig.setup_handlers({
       -- default handler for installed servers
@@ -85,7 +87,7 @@ return {
           capabilities = capabilities,
         })
       end,
-      
+
       ["lua_ls"] = function()
         -- configure lua server (with special settings)
         lspconfig["lua_ls"].setup({

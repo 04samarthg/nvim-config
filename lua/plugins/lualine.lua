@@ -9,7 +9,7 @@ return {
 	opts = function()
 		-- Catppuccin Mocha colors
 		local colors = {
-			bg = "",
+			bg = "#1e1e2e",
 			black = "#121220",
 			red = "#f38ba8",
 			green = "#a6e3a1",
