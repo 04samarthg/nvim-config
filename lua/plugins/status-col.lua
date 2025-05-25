@@ -8,12 +8,12 @@ return {
       relculright = true,
       ft_ignore = { "alpha", "nvim-tree", "oil", "Lazy", "Mason" },
       segments = {
-        { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+        { text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
         {
-          sign = { namespace = { "diagnostic" }, maxwidth = 1, auto = false },
+          sign = { namespace = { "diagnostic" }, auto = false },
           click = "v:lua.ScSa"
         },
-        { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+        { text = { builtin.lnumfunc }, click = "v:lua.ScLa" },
         { sign = { namespace = { "gitsign" }, auto = false, maxwidth = 1, colwidth = 1, } },
       },
     })

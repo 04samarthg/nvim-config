@@ -1,0 +1,32 @@
+
+//does negative weight cycle exists using bellman ford?
+bool spfa(int s, vector<vector<array<int, 2>>> &G, vector<int> &d){
+  int n = G.size();
+  queue<int> q;
+  vector<bool> inqueue(n,false);
+  vector<int> cnt(n, 0);
+
+  q.push(s); d[s] = 0;
+  inqueue[s] = true;
+  while(!q.empty()){
+    int v = q.front();
+    q.pop();
+    inqueue[v] = false;
+    for(auto edg:G[v]){
+      if(d[edg[0]]> d[v]+edg[1]){
+        d[edg[0]] = d[v]+edg[1];
+        if(!inqueue[edg[0]]){
+          q.push(edg[0]);
+          inqueue[edg[0]] = true;
+          cnt[edg[0]]++;
+          if(cnt[edg[0]]>n) 
+            return false;
+        }
+      }
+    }
+  }
+
+  return true;
+
+}
+

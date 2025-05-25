@@ -188,8 +188,6 @@ return {
 			separator = { right = "", left = "" },
 		})
 
-		vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#6c7086", bg = "#151520" }) -- Darker border effect
-
 		return config
 	end,
 }

@@ -1,0 +1,28 @@
+
+vector<int> dijkstra(vector<vector<array<int, 2>>> &G, int s){
+
+  int n = G.size();
+  vector<int> d(n, 1e15), p(n, -1);
+
+  d[s] = 0;
+  set<array<int, 2>> q;
+  q.insert({0, s});
+  while(!q.empty()){
+    int v = (*q.begin())[1];
+    q.erase(q.begin());
+
+    for(auto edg:G[v]){
+      int to = edg[0], W = edg[1];
+      if(d[to]>d[v]+W){
+        q.erase({d[to], to});
+        q.insert({d[v]+W, to});
+        d[to] = d[v]+W;
+        p[to] = v;
+      }
+    }
+  }
+
+  return d;
+
+}
+
