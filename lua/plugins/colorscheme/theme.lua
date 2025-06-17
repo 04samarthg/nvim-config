@@ -8,7 +8,7 @@ return {
     --   opts = {},
     -- },
     -- },
-    --  { "rose-pine/neovim", name = "rose-pine-moon" },
+     -- { "rose-pine/neovim", name = "rose-pine-moon" },
     --  {
     --    'EdenEast/nightfox.nvim',
     --    config = function()
@@ -100,7 +100,7 @@ return {
         priority = 1000,
         config = function()
             require('cyberdream').setup({
-                borderless_telescope = false,
+                borderless_telescope = true,
                 transparent = false,
                 hide_fillchars = true,
                 -- theme = {
@@ -116,6 +116,7 @@ return {
             })
 
             vim.cmd.colorscheme "cyberdream"
+                vim.api.nvim_set_hl(0, "StatusColumn", { bg = "#000000" })  -- or any dark hex color
         end,
     }
 

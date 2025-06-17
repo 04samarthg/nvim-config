@@ -8,7 +8,7 @@ return {
       relculright = true,
       ft_ignore = { "alpha", "nvim-tree", "oil", "Lazy", "Mason" },
       segments = {
-        { text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
+        { text = { builtin.foldfunc, " " }, click = "v:lua.ScFa", auto = true },
         {
           sign = { namespace = { "diagnostic" }, auto = false },
           click = "v:lua.ScSa"
