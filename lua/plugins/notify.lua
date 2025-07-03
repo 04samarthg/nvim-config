@@ -7,6 +7,7 @@ return {
       -- Animation style
       stages = "static",
       render = "compact",
+      top_down = false,
       -- max_height = function()
       --   return math.floor(vim.o.lines * 0.85)
       -- end,
