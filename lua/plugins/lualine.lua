@@ -8,15 +8,15 @@ return {
 	end,
 	opts = function()
 		local colors = {
-			bg = "#2a2a2e", -- background of inactive sections (slightly darker neutral)
+			bg = "#2a2a2e",   -- background of inactive sections (slightly darker neutral)
 			bg_alt = "#3a3a3f", -- alt background
 			bg_highlight = "#4a4a50",
-			fg = "#000000", -- black text
+			fg = "#000000",   -- black text
 			grey = "#b0b0b0",
 			blue = "#a0c8ff", -- calm sky blue
 			green = "#a8ffb0", -- mint green
 			cyan = "#a8f7ff", -- icy cyan
-			red = "#ff9a9a", -- muted coral
+			red = "#ff9a9a",  -- muted coral
 			yellow = "#fff59a", -- soft yellow
 			magenta = "#ff9aff", -- rosy magenta
 			pink = "#ff9ac9", -- blush pink
@@ -132,11 +132,17 @@ return {
 		-- filename
 		active_left({
 			"filename",
+			path = 4,
 			cond = function() return vim.fn.empty(vim.fn.expand("%:t")) ~= 1 end,
 			color = function() return { bg = mode_color[vim.fn.mode()] or colors.purple, fg = colors.fg } end,
 			padding = { left = 1, right = 1 },
 			separator = { right = "", left = "" },
 			symbols = { modified = "󰶻 ", readonly = " ", unnamed = " ", newfile = " " },
+			on_click = function()
+				local path = vim.fn.expand('%:p')
+				vim.fn.setreg('+', path)
+				vim.notify('Copied: ' .. path, vim.log.levels.INFO)
+			end,
 		})
 
 		-- macro recording
