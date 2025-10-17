@@ -1,6 +1,18 @@
 return {
-  "kylechui/nvim-surround",
-  event = "BufReadPost",
-  version = "*", -- Use for stability; omit to use `main` branch for the latest features
-  config = true,
+  "nvim-mini/mini.surround",
+  event = "VeryLazy", -- change to "BufReadPost" or key-based lazy loading if you prefer
+  opts = {
+    mappings = {
+      add = "gsa",            -- Add surrounding in Normal and Visual modes
+      delete = "gsd",         -- Delete surrounding
+      find = "gsf",           -- Find surrounding (to the right)
+      find_left = "gsF",      -- Find surrounding (to the left)
+      highlight = "gsh",      -- Highlight surrounding
+      replace = "gsr",        -- Replace surrounding
+      update_n_lines = "gsn", -- Update `n_lines`
+    },
+  },
+  config = function(_, opts)
+    require("mini.surround").setup(opts)
+  end,
 }

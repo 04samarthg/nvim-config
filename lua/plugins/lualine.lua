@@ -7,9 +7,6 @@ return {
 		vim.opt.laststatus = 0
 	end,
 	opts = function()
-		-- Catppuccin Mocha colors
-
-
 		local colors = {
 			bg = "#2a2a2e", -- background of inactive sections (slightly darker neutral)
 			bg_alt = "#3a3a3f", -- alt background
@@ -172,7 +169,7 @@ return {
 
 		active_right({
 			function()
-				local buf_clients = vim.lsp.get_active_clients({ bufnr = 0 })
+				local buf_clients = vim.lsp.get_clients({ bufnr = 0 })
 				if next(buf_clients) == nil then
 					return "No LSP"
 				end

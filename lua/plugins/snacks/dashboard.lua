@@ -1,6 +1,11 @@
 return {
   enabled = true,
   preset = {
+    keys = {
+      { icon = " ", key = "r", desc = "Restore Session", action = ":AutoSession restore"},
+      { icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
+      { icon = " ", key = "<esc>", desc = "Quit", action = ":qa" },
+    },
     header =
     [[
       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣶⣿⣿⣿⣷⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -27,7 +32,7 @@ return {
   },
   sections = {
     { section = "header" },
-    { section = "startup", padding = 1},
-    { section = "keys", gap = 1, padding = 1 },
+    { section = "startup", padding = 1 },
+    { section = "keys",    gap = 1,    padding = 1 },
   },
 }

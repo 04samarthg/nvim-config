@@ -1,4 +1,3 @@
--- ~/.config/nvim/init.lua
 require("core")
 
 -- Auto-save input1.txt on text change

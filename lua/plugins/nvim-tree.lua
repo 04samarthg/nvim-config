@@ -48,13 +48,13 @@ return {
     })
 
     -- set keymaps
-    local keymap = vim.keymap -- for conciseness
-    vim.api.nvim_set_hl(0, "NvimTreeNormal", { bg = "#22272B" }) -- Change #1E1E2E to your preferred color
-    vim.api.nvim_set_hl(0, "NvimTreeNormalNC", { bg = "#22272B" }) -- Ensure it applies to inactive windows too
+    local keymap = vim.keymap
+    vim.api.nvim_set_hl(0, "NvimTreeNormal", { bg = "#22272B" })
+    vim.api.nvim_set_hl(0, "NvimTreeNormalNC", { bg = "#22272B" })
 
-    keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" }) -- toggle file explorer
-    keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer on current file" }) -- toggle file explorer on current file
-    keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" }) -- collapse file explorer
-    keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" }) -- refresh file explorer
+    keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" }) -- toggle file explorer
+    keymap.set("n", "<C-e>", function()
+      require("nvim-tree.api").tree.focus()
+    end, { desc = "Bring focus to file explorer" })
   end
 }

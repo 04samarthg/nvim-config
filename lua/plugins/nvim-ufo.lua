@@ -9,10 +9,6 @@ return {
     vim.o.foldlevelstart = 99
     vim.o.foldenable = true
 
-    -- Key mappings for folding
-    vim.keymap.set("n", "zo", require("ufo").openAllFolds)
-    vim.keymap.set("n", "zc", require("ufo").closeAllFolds)
-
     -- Custom key mapping for preview
     vim.keymap.set("n", "zp", function()
       local winid = require("ufo").peekFoldedLinesUnderCursor()
