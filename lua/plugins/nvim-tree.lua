@@ -49,8 +49,8 @@ return {
 
     -- set keymaps
     local keymap = vim.keymap -- for conciseness
-    vim.api.nvim_set_hl(0, "NvimTreeNormal", { bg = "#181820" }) -- Change #1E1E2E to your preferred color
-    vim.api.nvim_set_hl(0, "NvimTreeNormalNC", { bg = "#181820" }) -- Ensure it applies to inactive windows too
+    vim.api.nvim_set_hl(0, "NvimTreeNormal", { bg = "#22272B" }) -- Change #1E1E2E to your preferred color
+    vim.api.nvim_set_hl(0, "NvimTreeNormalNC", { bg = "#22272B" }) -- Ensure it applies to inactive windows too
 
     keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" }) -- toggle file explorer
     keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "Toggle file explorer on current file" }) -- toggle file explorer on current file

@@ -1,6 +1,18 @@
 vim.cmd("let g:netrw_liststyle = 3")
 vim.cmd("let g:codeium_disable_bindings = 1")
 local opt = vim.opt -- for conciseness
+vim.g.clipboard = {
+  name = "wayclip",
+  copy = {
+    ["+"] = "waycopy -",
+    ["*"] = "waycopy -",
+  },
+  paste = {
+    ["+"] = "waypaste -",
+    ["*"] = "waypaste -",
+  },
+  cache_enabled = true,
+}
 
 --indentation
 opt.expandtab = true

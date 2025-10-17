@@ -1,0 +1,47 @@
+class LCAbs{
+  public:
+  vector<vector<int>> G;
+  int n;
+  vector<int> tin, rev, d;
+  vector<vector<int>> arrival;
+  int time = 0;
+
+  LCAbs(int _n, vector<vector<int>> &_G):G(_G), n(_n){
+    tin.resize(n+1); rev.resize(n+1); d.resize(n+1);
+    arrival.resize(n+1);
+    this->dfs(0, -1, 0);
+  }
+  
+  void dfs(int root, int par, int depth){
+    tin[root] = time;
+    rev[time] = root;
+    d[root] = depth;
+    arrival[depth].push_back(time++);
+    for(auto it:G[root]){
+      if(it != par){
+        dfs(it, root, depth+1);
+      }
+    }
+  }
+
+  int kth(int node, int k){
+    int dk = d[node] - k;
+    if(dk>=0){
+      return rev[*prev(upper_bound(all(arrival[dk]), tin[node]))];
+    }
+    else return -1;
+  }
+
+  int lca(int n1, int n2){
+    int lo = -1, hi = min(d[n1], d[n2])+1;
+    while(hi-lo>1){
+      int mid = (hi+lo)/2;
+      int anc1 = *prev(upper_bound(all(arrival[mid]), tin[n1]));
+      int anc2 = *prev(upper_bound(all(arrival[mid]), tin[n2]));
+      if(anc1 == anc2)lo = mid;
+      else hi = mid;
+    }
+    return rev[*prev(upper_bound(all(arrival[lo]), tin[n1]))];
+  }
+
+};

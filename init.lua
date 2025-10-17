@@ -3,8 +3,8 @@ require("core")
 
 -- Auto-save input1.txt on text change
 vim.cmd([[
-  autocmd BufWritePost /home/pheonix/cp/ipf.in :wa
-  autocmd TextChanged,TextChangedI /home/pheonix/cp/ipf.in silent! write
+  autocmd BufWritePost ~/cp/ipf.in :wa
+  autocmd TextChanged,TextChangedI ~/cp/ipf.in silent! write
 ]])
 
 if vim.g.CheckUpdateStarted == nil then
@@ -34,29 +34,32 @@ vim.api.nvim_create_user_command('CPTemplate', function(opts)
     else
         cp_templates.select_and_insert_template()
     end
-end, {nargs = "?"})
+end, { nargs = "?" })
 
 -- ------------------------------------------------------------------------
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({ { import = "plugins" }, { import = "plugins.lsp" }, { import = "plugins.colorscheme" },
-  checker = {
-    enabled = true,
-    notify = false,
-  },
-  change_detection = {
-    notify = false,
-  },
+require("lazy").setup({
+    { import = "plugins" },
+    { import = "plugins.lsp" },
+    { import = "plugins.colorscheme" },
+    checker = {
+        enabled = true,
+        notify = false,
+    },
+    change_detection = {
+        notify = false,
+    },
 })

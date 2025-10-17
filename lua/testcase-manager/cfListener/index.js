@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 // Function to write a test case to a file
 const writeTestCase = (testCase) => {
     const str = `${testCase.input}\nExpected Output:\n${testCase.output}`
-    fs.writeFileSync('/home/pheonix/cp/ipf.in', str, (err) => {
+    fs.writeFileSync('/home/phoenix/cp/ipf.in', str, (err) => {
         if (err) console.log(`Error writing input file: ${err}`);
     });
 };

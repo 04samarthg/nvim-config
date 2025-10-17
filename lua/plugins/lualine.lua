@@ -8,18 +8,23 @@ return {
 	end,
 	opts = function()
 		-- Catppuccin Mocha colors
+
+
 		local colors = {
-			bg = "#1e1e2e",
-			black = "#121220",
-			red = "#f38ba8",
-			green = "#a6e3a1",
-			yellow = "#f9e2af",
-			blue = "#89b4fa",
-			magenta = "#dd7733",
-			cyan = "#94e2d5",
-			white = "#ffffff",
-			orange = "#fab387",
-			grey = "#6c7086",
+			bg = "#2a2a2e", -- background of inactive sections (slightly darker neutral)
+			bg_alt = "#3a3a3f", -- alt background
+			bg_highlight = "#4a4a50",
+			fg = "#000000", -- black text
+			grey = "#b0b0b0",
+			blue = "#a0c8ff", -- calm sky blue
+			green = "#a8ffb0", -- mint green
+			cyan = "#a8f7ff", -- icy cyan
+			red = "#ff9a9a", -- muted coral
+			yellow = "#fff59a", -- soft yellow
+			magenta = "#ff9aff", -- rosy magenta
+			pink = "#ff9ac9", -- blush pink
+			orange = "#ffc78a", -- warm orange
+			purple = "#c79aff", -- lilac purple
 		}
 
 		-- Conditions
@@ -42,54 +47,53 @@ return {
 
 		-- Mode colors
 		local mode_color = {
-			n = colors.red,
-			i = colors.green,
-			v = colors.blue,
-			[""] = colors.blue,
-			V = colors.blue,
-			c = colors.magenta,
-			no = colors.red,
-			s = colors.orange,
-			S = colors.orange,
-			[""] = colors.orange,
-			ic = colors.yellow,
-			R = colors.magenta,
-			Rv = colors.magenta,
-			cv = colors.red,
-			ce = colors.red,
-			r = colors.cyan,
-			rm = colors.cyan,
+			n      = colors.red,
+			i      = colors.green,
+			v      = colors.blue,
+			[""]   = colors.blue,
+			V      = colors.blue,
+			c      = colors.magenta,
+			no     = colors.red,
+			s      = colors.orange,
+			S      = colors.orange,
+			ic     = colors.yellow,
+			R      = colors.magenta,
+			Rv     = colors.magenta,
+			cv     = colors.red,
+			ce     = colors.red,
+			r      = colors.cyan,
+			rm     = colors.cyan,
 			["r?"] = colors.cyan,
-			["!"] = colors.red,
-			t = colors.red,
+			["!"]  = colors.red,
+			t      = colors.red,
 		}
 
 		-- Lualine config
 		local config = {
 			options = {
-                globalstatus = true,
+				globalstatus = true,
 				section_separators = "",
 				component_separators = "",
 				theme = {
-					normal = { c = { fg = colors.black, bg = colors.black } },
+					normal = { c = { fg = colors.fg, bg = colors.bg } },
 					inactive = { c = { fg = colors.grey, bg = colors.bg } },
 				},
 			},
 			sections = {
 				lualine_a = {},
 				lualine_b = {},
-				lualine_y = {},
-				lualine_z = {},
 				lualine_c = {},
 				lualine_x = {},
+				lualine_y = {},
+				lualine_z = {},
 			},
 			inactive_sections = {
 				lualine_a = {},
 				lualine_b = {},
-				lualine_y = {},
-				lualine_z = {},
 				lualine_c = {},
 				lualine_x = {},
+				lualine_y = {},
+				lualine_z = {},
 			},
 		}
 
@@ -102,7 +106,6 @@ return {
 			table.insert(config.sections.lualine_x, component)
 		end
 
-		-- Other components (Filename, Branch, etc.)
 		active_left({
 			function()
 				local icon
@@ -123,67 +126,78 @@ return {
 				return icon:gsub("%s+", "")
 			end,
 			color = function()
-				return { bg = mode_color[vim.fn.mode()], fg = colors.black }
+				return { bg = mode_color[vim.fn.mode()] or colors.purple, fg = colors.fg }
 			end,
 			padding = { left = 1, right = 1 },
 			separator = { right = "", left = "" },
 		})
 
+		-- filename
 		active_left({
 			"filename",
-			cond = conditions.buffer_not_empty,
-			color = function()
-				return { bg = mode_color[vim.fn.mode()], fg = colors.black }
-			end,
+			cond = function() return vim.fn.empty(vim.fn.expand("%:t")) ~= 1 end,
+			color = function() return { bg = mode_color[vim.fn.mode()] or colors.purple, fg = colors.fg } end,
 			padding = { left = 1, right = 1 },
 			separator = { right = "", left = "" },
-			symbols = {
-				modified = "󰶻 ",
-				readonly = " ",
-				unnamed = " ",
-				newfile = " ",
-			},
+			symbols = { modified = "󰶻 ", readonly = " ", unnamed = " ", newfile = " " },
 		})
 
-		-- Macro recording indicator
+		-- macro recording
 		active_left({
 			function()
-				local recording_register = vim.fn.reg_recording()
-				if recording_register ~= "" then
-					return "雷 " .. recording_register
+				local reg = vim.fn.reg_recording()
+				if reg ~= "" then
+					return "󰑊 REC @" .. reg
 				end
 				return ""
 			end,
 			cond = function()
 				return vim.fn.reg_recording() ~= ""
 			end,
-			color = { fg = colors.black, bg = colors.green },
+			color = function()
+				return { bg = colors.red, fg = colors.fg }
+			end,
 			padding = { left = 1, right = 1 },
-			separator = { right = ""},
+			separator = { right = "" },
 		})
 
+		-- git branch
 		active_right({
 			"branch",
 			icon = "",
-			color = { bg = colors.blue, fg = colors.black },
+			color = { bg = colors.blue, fg = colors.fg },
 			padding = { left = 0, right = 1 },
 			separator = { right = "", left = "" },
 		})
 
-		-- Diagnostics
+		active_right({
+			function()
+				local buf_clients = vim.lsp.get_active_clients({ bufnr = 0 })
+				if next(buf_clients) == nil then
+					return "No LSP"
+				end
+				return "  " .. buf_clients[1].name
+			end,
+			color = { bg = colors.purple, fg = colors.fg },
+			padding = { left = 1, right = 1 },
+			separator = { right = "", left = "" },
+		})
+
+		-- diagnostics
 		active_right({
 			"diagnostics",
 			sources = { "nvim_diagnostic" },
 			symbols = { error = " ", warn = " ", info = " " },
 			colored = false,
-			color = { bg = colors.magenta, fg = colors.black },
+			color = { bg = colors.magenta, fg = colors.fg },
 			padding = { left = 1, right = 1 },
 			separator = { right = "", left = "" },
 		})
 
+		-- search count
 		active_right({
 			"searchcount",
-			color = { bg = colors.cyan, fg = colors.black },
+			color = { bg = colors.cyan, fg = colors.fg },
 			padding = { left = 1, right = 1 },
 			separator = { right = "", left = "" },
 		})

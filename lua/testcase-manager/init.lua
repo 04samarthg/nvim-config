@@ -1,9 +1,4 @@
 -- lua/testcase-manager/init.lua
-local pickers = require('telescope.pickers')
-local finders = require('telescope.finders')
-local conf = require('telescope.config').values
-local actions = require('telescope.actions')
-local action_state = require('telescope.actions.state')
 local Job = require('plenary.job')
 local curl = require('plenary.curl')
 
@@ -39,9 +34,9 @@ local function check_server()
     if shutdown_in_progress then
         return false
     end
-    
+
     local response = curl.get('http://localhost:' .. SERVER_PORT .. '/testcases', {
-        timeout = 1000,  -- 1 second timeout
+        timeout = 1000, -- 1 second timeout
     })
     return response.status == 200
 end
@@ -49,17 +44,17 @@ end
 -- Function to wait for server with retries
 local function wait_for_server(callback, retries)
     retries = retries or 0
-    
+
     if shutdown_in_progress then
         return
     end
-    
+
     if retries >= MAX_RETRIES then
         vim.notify('Server failed to start after multiple retries', vim.log.levels.ERROR)
         server_ready = false
         return
     end
-    
+
     vim.defer_fn(function()
         if check_server() then
             server_ready = true
@@ -95,7 +90,7 @@ local function start_server(callback)
     end
 
     -- Ensure server.js exists
-    local server_path = '/home/pheonix/.config/nvim/lua/testcase-manager/cfListener/index.js'
+    local server_path = '/home/phoenix/.config/nvim/lua/testcase-manager/cfListener/index.js'
     if vim.fn.filereadable(server_path) == 0 then
         vim.notify('server.js not found at: ' .. server_path, vim.log.levels.ERROR)
         return
@@ -129,24 +124,24 @@ end
 -- Function to stop the server
 local function stop_server(callback)
     shutdown_in_progress = true
-    
+
     if server_job then
         -- Kill any processes that might be using the port
         kill_existing_process()
-        
+
         server_job:shutdown()
         server_job = nil
         server_ready = false
-        
+
         if not shutdown_in_progress then
             vim.notify('Test case server stopped', vim.log.levels.INFO)
         end
     end
-    
+
     if callback then
         vim.defer_fn(callback, 1000)
     end
-    
+
     shutdown_in_progress = false
 end
 
@@ -159,9 +154,9 @@ local function fetch_test_cases()
     end
 
     local response = curl.get('http://localhost:' .. SERVER_PORT .. '/testcases', {
-        timeout = 2000  -- 2 second timeout
+        timeout = 2000 -- 2 second timeout
     })
-    
+
     if response.status ~= 200 then
         vim.notify('Failed to fetch test cases', vim.log.levels.ERROR)
         return {}
@@ -178,7 +173,7 @@ end
 
 -- Function to write selected test case to input file
 local function write_test_case(test_case)
-    local file = io.open('/home/pheonix/cp/ipf.in', 'w')
+    local file = io.open('/home/phoenix/cp/ipf.in', 'w')
     if file then
         file:write(test_case.input)
         file:write('\nExpected Output:\n' .. test_case.output)
@@ -201,7 +196,7 @@ local function navigate_to_testcase(number)
         end
 
         local test_cases = fetch_test_cases()
-        
+
         if #test_cases == 0 then
             vim.notify('No test cases available', vim.log.levels.WARN)
             return
@@ -214,7 +209,7 @@ local function navigate_to_testcase(number)
                 return
             end
         end
-        
+
         vim.notify('Test case ' .. number .. ' not found', vim.log.levels.WARN)
     end
 end
@@ -228,51 +223,61 @@ function M.pick_test_case()
     end
 
     local test_cases = fetch_test_cases()
-    
+
     if #test_cases == 0 then
         return
     end
 
-    -- Customize telescope layout for compact view
-    local layout_config = {
-        width = 0.3,
-        height = 0.4,
-        prompt_position = "top",
-    }
+    if pcall(require, "snacks") then
+        -- Convert test cases to picker items
+        local items = {}
+        for _, test_case in ipairs(test_cases) do
+            local line_count = select(2, test_case.input:gsub('\n', '\n')) + 1
+            table.insert(items, {
+                text = string.format("TC %d (%d lines)", test_case.id, line_count),
+                test_case = test_case,
+            })
+        end
 
-    pickers.new({
-        layout_strategy = 'vertical',
-        layout_config = layout_config,
-    }, {
-        prompt_title = 'Test Cases',
-        finder = finders.new_table({
-            results = test_cases,
-            entry_maker = function(entry)
-                return {
-                    value = entry,
-                    display = string.format("TC %d (%d lines)", 
-                        entry.id, 
-                        select(2, entry.input:gsub('\n', '\n')) + 1),
-                    ordinal = tostring(entry.id),
-                }
+        Snacks.picker.pick({
+            prompt = "Test Cases",
+            title = "Test Cases",
+            items = items,
+            format = function(item)
+                return { { item.text } }
             end,
-        }),
-        sorter = conf.generic_sorter({}),
-        attach_mappings = function(prompt_bufnr, map)
-            actions.select_default:replace(function()
-                local selection = action_state.get_selected_entry()
-                actions.close(prompt_bufnr)
-                write_test_case(selection.value)
-            end)
-            return true
-        end,
-    }):find()
+            layout = {
+                preset = "vertical",
+                width = 0.3,
+                height = 0.4,
+            },
+            actions = {
+                confirm = function(picker, item)
+                    picker:close()
+                    write_test_case(item.test_case)
+                end,
+            },
+        })
+    else
+        -- Fallback to vim.ui.select
+        vim.ui.select(test_cases, {
+            prompt = "Test Cases",
+            format_item = function(test_case)
+                local line_count = select(2, test_case.input:gsub('\n', '\n')) + 1
+                return string.format("TC %d (%d lines)", test_case.id, line_count)
+            end,
+        }, function(choice)
+            if choice then
+                write_test_case(choice)
+            end
+        end)
+    end
 end
 
 -- Setup function
 function M.setup(opts)
     opts = opts or {}
-    
+
     -- Create user commands
     vim.api.nvim_create_user_command('TestCasePicker', function()
         M.pick_test_case()
@@ -285,7 +290,7 @@ function M.setup(opts)
             end)
         end)
     end, {})
-    
+
     -- Set up telescope picker keymapping
     if opts.keymap then
         vim.keymap.set('n', opts.keymap, function() M.pick_test_case() end, { desc = 'Pick test case' })

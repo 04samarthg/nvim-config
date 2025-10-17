@@ -103,20 +103,17 @@ return {
                 borderless_telescope = true,
                 transparent = false,
                 hide_fillchars = true,
-                -- theme = {
                 colors = {
-                    bg = "#1e1e2e",
+                    bg = "#16181a",
                 },
                 overrides = function(colors)
                     return {
                         BufferLineFill = { bg = colors.popup_bg },
                     }
                 end,
-                -- },
             })
 
             vim.cmd.colorscheme "cyberdream"
-                vim.api.nvim_set_hl(0, "StatusColumn", { bg = "#000000" })  -- or any dark hex color
         end,
     }
 
