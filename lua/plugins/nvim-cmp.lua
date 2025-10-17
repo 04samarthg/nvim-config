@@ -61,7 +61,7 @@ return {
     end
 
     local preferred_sources = {
-      { name = "codeium",                 max_item_count = 3, group_index = 2 },
+      { name = "codeium",                 max_item_count = 3,  group_index = 2 },
       { name = "nvim_lsp_signature_help", group_index = 1 },
       { name = "nvim_lsp",                max_item_count = 20, group_index = 1 },
       { name = "luasnip",                 max_item_count = 5,  group_index = 1 },
@@ -133,23 +133,22 @@ return {
         },
       }),
     })
-
-    -- Darker popup window
-    vim.api.nvim_set_hl(0, "Pmenu", { bg = "#181825", fg = "#cdd6f4" })             -- Darker background
-    vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#45475a", fg = "#cdd6f4", bold = true }) -- Highlighted selection
-    vim.api.nvim_set_hl(0, "PmenuBorder", { fg = "#cba6f7" })                       -- Purple border
-
-    -- Fix text appearance
-    vim.api.nvim_set_hl(0, "CmpItemAbbr", { fg = "#cdd6f4", bg = "NONE" })                             -- Normal text
-    vim.api.nvim_set_hl(0, "CmpItemAbbrDeprecated", { fg = "#7f849c", bg = "NONE", strikethrough = true }) -- Deprecated
-    vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { fg = "#fab387", bold = true })                        -- Matched characters
-    vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#fab387", bold = true })                   -- Fuzzy matched text
-
-    -- Gutter/icons area
-    vim.api.nvim_set_hl(0, "CmpItemKindDefault", { fg = "#cba6f7", bg = "NONE" }) -- Default icon color
-    vim.api.nvim_set_hl(0, "CmpItemKindVariable", { fg = "#f38ba8", bg = "NONE" }) -- Variables
-    vim.api.nvim_set_hl(0, "CmpItemKindFunction", { fg = "#a6e3a1", bg = "NONE" }) -- Functions
-    vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { fg = "#89b4fa", bg = "NONE" }) -- Keywords
-    vim.api.nvim_set_hl(0, "CmpItemMenu", { fg = "#7f849c", bg = "NONE" }) -- Darken the source text
+ 
+    vim.api.nvim_set_hl(0, "Pmenu", { bg = "#22272B", fg = "#B0B0C0" })             -- Popup background (dark)
+    vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#6F7080", fg = "#E5E5F0", bold = true }) -- Selection highlight
+    vim.api.nvim_set_hl(0, "PmenuBorder", { bg = "#22272B", fg = "#22272B" })                    -- Border with a cyber edge
+    
+    vim.api.nvim_set_hl(0, "CmpItemAbbr", { fg = "#D0D0DC", bg = "NONE" })                -- Normal text
+    vim.api.nvim_set_hl(0, "CmpItemAbbrDeprecated", { fg = "#6C6C80", strikethrough = true }) -- Deprecated
+    vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { fg = "#FFD580", bold = true })           -- Matched characters (amber)
+    vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#FFD580", bold = true })      -- Fuzzy match highlight
+    vim.api.nvim_set_hl(0, "CmpItemKindDefault", { fg = "#9D87F7", bg = "NONE" }) -- Default
+    vim.api.nvim_set_hl(0, "CmpItemKindVariable", { fg = "#F0719B", bg = "NONE" }) -- Variables
+    vim.api.nvim_set_hl(0, "CmpItemKindFunction", { fg = "#8BE9FD", bg = "NONE" }) -- Functions
+    vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { fg = "#50FA7B", bg = "NONE" }) -- Keywords
+    vim.api.nvim_set_hl(0, "CmpItemKindField", { fg = "#BD93F9", bg = "NONE" }) -- Fields
+    vim.api.nvim_set_hl(0, "CmpItemKindProperty", { fg = "#FFB86C", bg = "NONE" }) -- Properties
+    vim.api.nvim_set_hl(0, "CmpItemKindClass", { fg = "#8BE9FD", bg = "NONE" }) -- Classes
+    vim.api.nvim_set_hl(0, "CmpItemMenu", { fg = "#6F7080", bg = "NONE" })     -- Source text (dim)
   end,
 }
